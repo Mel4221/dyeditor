@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor</title>
+    <style>
+        body {
+            background-color: #474747; /* Dark background */
+            margin: 0;
+            padding: 0;
+        }
+
+        .editor-container {
+            display: flex;
+            position: relative;
+            background-color: #1e1e1e; /* Dark background */
+            border-radius: 8px;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .line-counter-container {
+            position: relative;
+            width: 50px; /* Fixed width for line numbers */
+            background-color: #2d2d2d; /* Darker background for line numbers */
+            color: #dcdcdc; /* Light text color for readability */
+            padding-top: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            border-right: 1px solid #444;
+            height: 100%;
+            overflow-y: auto; /* Allow scrolling of line numbers */
+            text-align: right;
+            padding-right: 10px; /* Add padding to align text */
+        }
+
+        .line-counter-number {
+            margin: 0;
+            padding: 0;
+        }
+
+        .line-counter-number div {
+            padding: 2px 0;
+        }
+
+        #editor-box {
+            flex-grow: 1;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #dcdcdc; /* Light text color */
+            background-color: #1e1e1e; /* Dark background */
+            border: 1px solid #444;
+            line-height: 1.5;
+            outline: none;
+            white-space: pre-wrap; /* Allow wrapping */
+            overflow-y: scroll;
+            word-wrap: break-word; /* Break words if necessary */
+            display: block;
+            min-height: 100%;
+            padding-left: 5px;
+            position: relative;
+        }
+
+        #editor-box::selection {
+            background-color: #3399ff; /* Highlight selection with blue */
+        }
+
+        .view-line {
+            display: block;
+            min-height: 19px;
+        }
+
+        .view-line span {
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="editor-container">
+    <div class="line-counter-container">
+        <div class="line-counter-number">
+            <!-- Line numbers will be injected here by JavaScript -->
+        </div>
+    </div>
+    <div id="editor-box" contenteditable="true" class="vscode-textbox" placeholder="Open a file or type something..."></div>
+</div>
+
+<script>
+    const editorBox = document.getElementById('editor-box');
+    const lineCounter = document.querySelector('.line-counter-number');
+    const lineCounterContainer = document.querySelector('.line-counter-container');
+
+    // Function to update line numbers
+    function updateLineNumbers() {
+        const lines = editorBox.innerHTML.split('<div>').filter(line => line.trim() !== '').length;
+        lineCounter.innerHTML = ''; // Clear current line numbers
+
+        // Create a new line number for each line of text
+        for (let i = 1; i <= lines; i++) {
+            const div = document.createElement('div');
+            div.textContent = i; // Display the line number
+            lineCounter.appendChild(div);
+        }
+
+        // Adjust the height of the line number container to match the editor box
+        lineCounterContainer.style.height = `${editorBox.scrollHeight}px`;
+    }
+
+    // Sync scroll position of line numbers with editor scroll position
+    editorBox.addEventListener('scroll', () => {
+        lineCounterContainer.scrollTop = editorBox.scrollTop;
+    });
+
+    // Update line numbers and store content on input
+    editorBox.addEventListener('input', updateLineNumbers);
+
+    // Insert content with line breaks into editor
+    function insertTextLine(text) {
+        const lines = text.split('\n');
+        let formattedContent = '';
+        lines.forEach(line => {
+            formattedContent += `<div class="view-line"><span class="mtk1">${line}</span></div>`;
+        });
+        editorBox.innerHTML = formattedContent;
+    }
+
+    // Initial call to populate line numbers
+    updateLineNumbers();
+
+</script>
+
+</body>
+</html>

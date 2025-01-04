@@ -1,0 +1,58 @@
+<html>
+<li class="mb-1"><button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+        data-bs-toggle="collapse" data-bs-target="#Properties-collapse" aria-expanded="false">Properties</button>
+    <div class="collapse" id="Properties-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li class="mb-1"><a href="#" data-src="Properties/launchSettings.json" data-id="61142293"
+                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">launchSettings.json</a></li>
+        </ul>
+    </div>
+</li>
+
+
+<script>
+    span.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent the event from bubbling up to the parent div
+
+        const id = event.target.parentElement.getAttribute('data-tab');
+        const content_id = editor_box.getAttribute('data-src');
+        const files = document.querySelectorAll('#file-tree li a'); // Assuming your files are links in the file tree
+        open_file.delete(id);
+        event.target.parentElement.remove();
+
+        // Clear editor if the current file is being closed
+        if (id === content_id) {
+            editor_box.value = '';
+
+            // Automatically switch to the first tab if available
+            const firstTab = tabs_container.querySelector('.tab');
+            if (firstTab) {
+                firstTab.click();
+            }
+        }
+
+        // Highlight the corresponding file in the explorer and collapse others
+        files.forEach((file) => {
+            const path = file.getAttribute('data-id');
+            file.classList.remove('focus'); // Remove focus class from all files
+
+            if (path === id) {
+                file.classList.add('focus'); // Add focus class to the current file
+                const collapseTarget = file.closest('li').querySelector('.collapse');
+                if (collapseTarget) {
+                    collapseTarget.classList.add('show'); // Ensure the parent folder is expanded
+                }
+                file.click(); // Simulate a click to activate it
+            } else {
+                const collapseTarget = file.closest('li').querySelector('.collapse');
+                if (collapseTarget) {
+                    collapseTarget.classList.remove('show'); // Collapse non-matching folders
+                }
+            }
+        });
+
+        console.log("File closed", [fileInfo.name, fileInfo.id]);
+    });
+</script>
+
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="src/assets/js/color-modes.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mel4221">
+    <meta name="generator" content="QNote">
+    <title>QNote</title>
+    <link href="src/awsome/css/all.min.css" rel="stylesheet">
+    <link href="src/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="src/css/navbars.css" rel="stylesheet">
+    <link href="src/css/sidebars.css" rel="stylesheet">
+    <link href="src/css/editor.css" rel="stylesheet">
+    <link href="src/css/QNote.css" rel="stylesheet">
+    <!--link rel="icon" type="image/x-icon" href="src/img/favicon.webp"-->
+    <link rel="icon" type="image/x-icon" href="src/img/favicon.webp">  
+  </head>
+  <body>
+       <!--
+        This is the ToolsStrip top where you have pretty mutch the maing options
+        @Strip
+        @index0
+      -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid">
+        
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">File</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" id="new-file">New</a></li>
+                <li><a class="dropdown-item" href="#" id="open">Open</a></li>
+                <li><a class="dropdown-item" href="#" id="save">Save</a></li>
+                <li><a class="dropdown-item" href="#" id="save-as">Save As</a></li>
+                <li><a class="dropdown-item" href="#" id="print">Print</a></li>
+                <li><a class="dropdown-item" href="#" id="exit">Exit</a></li>
+              </ul>
+            </li>
+           
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Edit</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Undo</a></li>
+                <li><a class="dropdown-item" href="#">Cut</a></li>
+                <li><a class="dropdown-item" href="#">Copy</a></li>
+                <li><a class="dropdown-item" href="#">Delete</a></li>
+                <li><a class="dropdown-item" href="#">Find</a></li>
+                <li><a class="dropdown-item" href="#">Time / Date</a></li>
+                <li><a class="dropdown-item" href="#">Font</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">View</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Zoom in</a></li>
+                <li><a class="dropdown-item" href="#">Zoom Out</a></li>
+                <li><a class="dropdown-item" href="#">Zoom Reset</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    Status Bar
+                    <input type="checkbox" checked />
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main>
+        <!--
+          This section is pretty mutch the Sidebar and is used
+          as the explorer for the current directory that is opened
+          @Explorer
+          @index1
+        -->
+      <div id="sidebar">
+        <a href="#" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+          <span class="fs-5 fw-semibold">Explorer</span>
+        </a>
+        <ul style="margin-left: 5px;" class="list-unstyled ps-0" id="file-tree">
+         <!--
+            here is where the list of files and directory goes  
+         -->
+        </ul>
+      </div>
+      <div id="resizer" style="width: 5px; cursor: ew-resize; position: absolute; top: 0; right: 0; bottom: 0;"></div>
+      <!--
+          This section is the texbox where the text is inputed and is used to 
+          edit the file pretty mutch 
+          @index2
+          @editor
+        -->
+      <div id="editor-container">
+        <div class="tabs-container" id="tabs">
+
+        </div>
+        <div style="display: none;" id="icon-container-box">
+
+        <div style="position: absolute;left: 50%;top:50%" class="spinner-border text-secondary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        </div>
+      
+        <textarea id="editor-box" class="vscode-textbox" placeholder="Open a file or type something..."></textarea>
+         <!--END OF EDITOR BOX-->
+                <!--
+                  lets use this as a futer man and lets called it day.
+                  @index3
+                  @footer
+                -->
+        <div class="footer">
+          <ul class="list-inline">
+            <li>Ln 0</li>
+            <li>Col 0</li>
+            <li>Buffer Size 0B</li>
+            <li>100%</li>
+            <li>Windows(CRLF)</li>
+            <li>UTF-8</li>
+          </ul>
+        </div>
+      </div>
+       
+        <!--
+                  lets use this as a futer man and lets called it day.
+                  @index4
+                  @file_picker
+        -->
+      <div clas="file_picker">
+        <iframe src="FP.html" id="file_picker"></iframe>
+      </div>
+    </main>
+    <script src="src/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/js/QNote.js"></script>
+  </body>
+</html>

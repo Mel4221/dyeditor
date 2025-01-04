@@ -1,0 +1,97 @@
+{
+    "root-path": "C:/Users/Melquiceded/Documents/Beta/QNoteManager",
+    "items": [
+        {
+            "Name": "bin",
+            "Type": "dir",
+            "Sub": [
+                {
+                    "Type": "dir",
+                    "Name": "Debug",
+                    "Path": "bin/Debug",
+                    "Id": 67481843,
+                    "Sub": [
+                        {
+                            "Type": "dir",
+                            "Name": "net6.0",
+                            "Path": "bin/Debug/net6.0",
+                            "Id": 33864142,
+                            "Sub": [
+                                {
+                                    "Type": "file",
+                                    "Name": "appsettings.Development.json",
+                                    "Path": "bin/Debug/net6.0/appsettings.Development.json",
+                                    "Id": 78294094,
+                                    "Sub": []
+                                },
+                                {
+                                    "Type": "file",
+                                    "Name": "appsettings.json",
+                                    "Path": "bin/Debug/net6.0/appsettings.json",
+                                    "Id": 90905120,
+                                    "Sub": []
+                                },
+                                {
+                                    "Type": "file",
+                                    "Name": "Newtonsoft.Json.dll",
+                                    "Path": "bin/Debug/net6.0/Newtonsoft.Json.dll",
+                                    "Id": 73841610,
+                                    "Sub": []
+                                },
+                                {
+                                    "Type": "file",
+                                    "Name": "QNoteManager.deps.json",
+                                    "Path": "bin/Debug/net6.0/QNoteManager.deps.json",
+                                    "Id": 94007937,
+                                    "Sub": []
+                                },
+                                {
+                                    "Type": "file",
+                                    "Name": "QNoteManager.dll",
+                                    "Path": "bin/Debug/net6.0/QNoteManager.dll",
+                                    "Id": 52327188,
+                                    "Sub": []
+                                },
+                                {
+                                    "Type": "file",
+                                    "Name": "QNoteManager.exe",
+                                    "Path": "bin/Debug/net6.0/QNoteManager.exe",
+                                    "Id": 32202780,
+                                    "Sub": []
+                                },
+                                {
+                                    "Type": "file",
+                                    "Name": "QNoteManager.pdb",
+                                    "Path": "bin/Debug/net6.0/QNoteManager.pdb",
+                                    "Id": 75015505,
+                                    "Sub": []
+                                },
+                                {
+                                    "Type": "file",
+                                    "Name": "QNoteManager.runtimeconfig.json",
+                                    "Path": "bin/Debug/net6.0/QNoteManager.runtimeconfig.json",
+                                    "Id": 40298503,
+                                    "Sub": []
+                                },
+                                {
+                                    "Type": "file",
+                                    "Name": "QuickTools.dll",
+                                    "Path": "bin/Debug/net6.0/QuickTools.dll",
+                                    "Id": 45916965,
+                                    "Sub": []
+                                },
+                                {
+                                    "Type": "file",
+                                    "Name": "QuickTools.xml",
+                                    "Path": "bin/Debug/net6.0/QuickTools.xml",
+                                    "Id": 34840162,
+                                    "Sub": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

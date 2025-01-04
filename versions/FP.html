@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Picker Replication</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+/* Center the file picker in the middle of the screen */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #252526; /* Set the dark background */
+  margin: 0; /* Remove default body margin */
+}
+
+/* File Picker Container Styling */
+.file-picker {
+  width: 400px;
+  padding: 20px;
+  background-color: #2d2d2d; /* Darker background for the file picker */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #d4d4d4; /* Light text color to contrast with dark background */
+}
+
+/* Path Textbox */
+.path-bar {
+  display: flex;
+  align-items: center;
+}
+
+#current-path {
+  background-color: #333; /* Dark background for the textbox */
+  border: 1px solid #444; /* Dark border for the textbox */
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: #d4d4d4; /* Light text color */
+  cursor: not-allowed;
+}
+
+ /* File Item Icons with Labels */
+.files-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  max-height: 300px; /* Set a max height for the container */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding-right: 10px; /* Optional: add padding to avoid scrollbars sticking to the edge */
+}
+
+
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  text-align: center;
+  background-color: #444; /* Dark background for file items */
+  border: 1px solid #555; /* Darker border for file items */
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.file-item i {
+  font-size: 24px;
+  color: #007bff; /* Blue color for icons */
+  margin-bottom: 5px;
+}
+
+.file-item .file-name {
+  font-size: 12px;
+  color: #d4d4d4; /* Light text color */
+  word-wrap: break-word;
+}
+
+/* Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+#open-btn, #cancel-btn {
+  width: 48%;
+}
+
+/* Style the icons */
+.fas {
+  font-size: 20px;
+}
+
+
+</style>
+<body>
+
+    <div class="file-picker">
+        <!-- Path Textbox -->
+        <div class="path-bar mb-3">
+          <input type="text" class="form-control" id="current-path" value="C:\Users\Documents" readonly />
+        </div>
+         <!-- File Icons with Text Labels -->
+        <div class="files-container mb-3">
+          <div class="file-item">
+            <i class="fas fa-file-alt"></i>
+            <span class="file-name">file.txt</span>
+          </div>
+          <div class="file-item">
+            <i class="fas fa-file-image"></i>
+            <span class="file-name">image.png</span>
+          </div>
+          <div class="file-item">
+            <i class="fas fa-file-code"></i>
+            <span class="file-name">script.js</span>
+          </div>
+        
+          <!-- More file items can go here -->
+        </div>
+        
+        <!-- Buttons for Open and Cancel -->
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="open-btn">Open</button>
+          <button class="btn btn-secondary" id="cancel-btn">Cancel</button>
+        </div>
+      </div>
+      
+
+<!-- Bootstrap JS (Optional for interactivity) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

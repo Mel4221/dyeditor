@@ -1,0 +1,39 @@
+/* Main container for the editor (textarea) */
+#editor-container {
+  height:85%;
+  position: absolute; /* Use absolute positioning to enforce placement */
+  top: 56px; /* Adjust for the height of the navbar */
+  left: 280px; /* Adjust for the width of the sidebar */
+  right: 0; /* Extend to the right edge of the viewport */
+  bottom: 0; /* Extend to the bottom of the viewport */
+  padding: 10px; /* Optional padding for the editor content */
+  background-color: #1E1E1E; /* Matches the VSCode dark theme */
+}
+
+/* Textarea styling (full width and height within the editor container) */
+.vscode-textbox {
+  overflow: auto; /* Enable scrollbars when necessary */
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  color: #D4D4D4;
+  background-color: #1E1E1E;
+  border: 1px solid #333;
+  border-radius: 5px;
+  resize: none; /* Prevent resizing */
+  outline: none;
+  box-shadow: none;
+}
+
+/* Focus state for the textarea */
+.vscode-textbox:focus {
+  border-color: #0066cc;
+  background-color: #252526;
+}
+
+/* Placeholder styling */
+.vscode-textbox::placeholder {
+  color: #888;
+}

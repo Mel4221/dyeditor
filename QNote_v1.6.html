@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="src/assets/js/color-modes.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mel4221">
+    <meta name="generator" content="QNote">
+    <title>QNote</title>
+    <link href="src/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="src/css/navbars.css" rel="stylesheet">
+    <link href="src/css/sidebars.css" rel="stylesheet">
+    <link href="src/css/editor.css" rel="stylesheet">
+    <link href="src/css/QNote.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="src/img/favicon.webp">  
+    <style>
+      body {
+        background-color: #474747; /* Dark background */
+        margin: 0;
+        padding: 0;
+      }
+
+      .editor-container {
+        display: flex;
+        position: relative;
+        background-color: #1e1e1e; /* Dark background */
+        overflow: hidden;
+        height: calc(100vh - 56px); /* Full height minus navbar */
+        width: 100%;
+      }
+
+      #sidebar {
+        background-color: #2d2d2d; /* Dark sidebar */
+        color: #dcdcdc; /* Light text */
+        overflow-y: auto;
+        width: 250px; /* Default sidebar width */
+        resize: horizontal;
+        padding: 10px;
+      }
+
+      #resizer {
+        width: 5px;
+        background-color: #444;
+        cursor: ew-resize;
+      }
+
+      .line-counter-container {
+        position: relative;
+        width: 50px; /* Fixed width for line numbers */
+        background-color: #2d2d2d; /* Darker background for line numbers */
+        color: #dcdcdc; /* Light text color for readability */
+        padding-top: 10px;
+        font-family: monospace;
+        font-size: 14px;
+        border-right: 1px solid #444;
+        height: 100%;
+        overflow-y: auto; /* Allow scrolling of line numbers */
+        text-align: right;
+        padding-right: 10px; /* Add padding to align text */
+      }
+
+      .line-counter-number {
+        margin: 0;
+        padding: 0;
+      }
+
+      .line-counter-number div {
+        padding: 2px 0;
+      }
+
+      #editor-box {
+        flex-grow: 1;
+        padding: 10px;
+        font-family: monospace;
+        font-size: 14px;
+        color: #dcdcdc; /* Light text color */
+        background-color: #1e1e1e; /* Dark background */
+        border: 1px solid #444;
+        line-height: 1.5;
+        outline: none;
+        white-space: pre-wrap; /* Allow wrapping */
+        overflow-y: scroll;
+        word-wrap: break-word; /* Break words if necessary */
+        display: block;
+        min-height: 100%;
+        padding-left: 5px;
+        position: relative;
+      
+      }
+
+      #editor-box::selection {
+        background-color: #3399ff; /* Highlight selection with blue */
+      }
+
+      .view-line {
+        display: block;
+        min-height: 19px;
+      }
+
+      .view-line span {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">File</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" id="open">Open</a></li>
+                <li><a class="dropdown-item" href="#" id="save">Save</a></li>
+                <li><a class="dropdown-item" href="#" id="save-as">Save As</a></li>
+                <li><a class="dropdown-item" href="#" id="print">Print</a></li>
+                <li><a class="dropdown-item" href="#" id="exit">Exit</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Edit</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Undo</a></li>
+                <li><a class="dropdown-item" href="#">Cut</a></li>
+                <li><a class="dropdown-item" href="#">Copy</a></li>
+                <li><a class="dropdown-item" href="#">Delete</a></li>
+                <li><a class="dropdown-item" href="#">Find</a></li>
+                <li><a class="dropdown-item" href="#">Time / Date</a></li>
+                <li><a class="dropdown-item" href="#">Font</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">View</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Zoom in</a></li>
+                <li><a class="dropdown-item" href="#">Zoom Out</a></li>
+                <li><a class="dropdown-item" href="#">Zoom Reset</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    Status Bar
+                    <input type="checkbox" checked />
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <div class="editor-container">
+        <div id="sidebar">
+          <a href="#" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+            <span class="fs-5 fw-semibold">Explorer</span>
+          </a>
+          <ul style="margin-left: 5px;" class="list-unstyled ps-0" id="file-tree">
+            <!-- File and directory list goes here -->
+          </ul>
+        </div>
+        <div id="resizer"></div>
+        <div class="line-counter-container">
+          <div class="line-counter-number">
+            <!-- Line numbers will be injected here by JavaScript -->
+          </div>
+        </div>
+        <div id="editor-box" contenteditable="true" class="vscode-textbox" placeholder="Open a file or type something..."></div>
+      </div>
+    </main>
+    <script src="src/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const editorBox = document.getElementById('editor-box');
+      const lineCounter = document.querySelector('.line-counter-number');
+      const resizer = document.getElementById('resizer');
+      const sidebar = document.getElementById('sidebar');
+
+      // Function to update line numbers
+      function updateLineNumbers() {
+        const lines = editorBox.innerHTML.split('<div>').filter(line => line.trim() !== '').length;
+        lineCounter.innerHTML = ''; // Clear current line numbers
+
+        for (let i = 1; i <= lines; i++) {
+          const div = document.createElement('div');
+          div.textContent = i; // Display the line number
+          lineCounter.appendChild(div);
+        }
+      }
+
+      // Sync scroll position of line numbers with editor scroll position
+      editorBox.addEventListener('scroll', () => {
+        document.querySelector('.line-counter-container').scrollTop = editorBox.scrollTop;
+      });
+
+      // Update line numbers on input
+      editorBox.addEventListener('input', updateLineNumbers);
+      updateLineNumbers(); // Initial call
+
+      // Resize sidebar functionality
+      resizer.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        document.addEventListener('mousemove', resize);
+        document.addEventListener('mouseup', stopResize);
+      });
+
+      function resize(e) {
+        sidebar.style.width = `${e.clientX}px`;
+      }
+
+      function stopResize() {
+        document.removeEventListener('mousemove', resize);
+        document.removeEventListener('mouseup', stopResize);
+      }
+    </script>
+  </body>
+</html>

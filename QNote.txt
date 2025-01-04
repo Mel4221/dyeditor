@@ -1,0 +1,16 @@
+function shortenPath(path) {
+    const parts = path.split(/[\\/]/); // Split the path by `/` or `\`
+    
+    // If the path has fewer than 3 parts, there's nothing to shorten
+    if (parts.length <= 3) return path;
+
+    // Keep the drive/root, replace the middle with "...", and append the last segment
+    return `${parts[0]}/.../${parts[parts.length - 1]}`;
+}
+
+// Example usage:
+const path1 = "C:/Users/Melquiceded/Documents/editors/nano";
+const path2 = "C:/nano";
+
+console.log(shortenPath(path1)); // Output: "C:/.../nano"
+console.log(shortenPath(path2)); // Output: "C:/nano"

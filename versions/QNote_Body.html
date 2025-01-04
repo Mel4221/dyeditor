@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QNote @FILE</title>
+    <link rel="stylesheet" href="src/css/bootstrap-utilities.min.css"/>
+</head>
+<body>
+    <div class="app">
+        
+        <div class="options">
+            <ul>
+                <li class="option">File
+                     <ul class="sub_option">
+                       <li>Open</li>
+                       <li>Save</li>
+                       <li>Save As</li>
+                       <li>Print</li>
+                       <li>Exit</li>
+                     </ul>
+                </li>
+                <li class="option">Edit
+                    <ul class="sub_option">
+                      <li>Undo</li>
+                      <li>Cut</li>
+                      <li>Copy</li>
+                      <li>Delete</li>
+                      <li>Find</li>
+                      <li>Time / Date</li>
+                      <li>Font</li>
+                    </ul>
+               </li>
+               <li class="option">View
+                <ul class="sub_option">
+                  <li>Zoom
+                        <ul class="sub_option">
+                            <li>Zoom In</li>
+                            <li>Zoom Out</li>
+                            <li>Reset</li>
+                        </ul>
+                  </li>
+                  <li>
+                    <label>Show Status Bar</label>
+                    <input checked type="checkbox">
+                  </li>
+                </ul>
+           </li>
+            </ul>
+        </div>
+        <div class="opened_files">
+            <ul>
+                <li>file.txt</li>
+                <li>file.txt</li>
+                <li>file.txt</li>
+            </ul>
+        </div>
+        <div class="explorer">
+                <ul>
+                    <li class="dir">src/
+                        <ul class="sub_list">
+                            <li class="dir">css/ 
+                                <ul class="sub_list">
+                                    <li class="file">style.css</li>
+                                </ul>
+                            </li>
+                            <li  class="dir">js/
+                                <ul class="sub_list">
+                                    <li class="file">script.js</li>
+                                </ul>
+                            </li>
+                            <li class="dir">img/</li>
+                        </ul>
+                    </li>
+                </ul>
+        </div>
+        <div class="textbox">
+            <textarea rows="100" cols="100">
+
+            </textarea>
+        </div>
+        <div class="status_bar">
+            Ln 0, Col 0 Buffer Size 0B 100% Windows(CRLF) UTF-8
+        </div>
+    </div>
+    <script src="src/js/QNote.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+const cancelBtn = document.getElementById('cancel-btn');
+const openBtn = document.getElementById('open-btn');
+const items = document.querySelectorAll('.file-item'); 
+const current_path = document.getElementById('current-path'); 
+let length = 0; 
+let map = new Map();
+
+
+// Global variables to track last clicked element and time
+let lastClickedElement = null;
+let lastClickTime = 0;
+
+function gotoDir(dir)
+{
+    console.log("Loading directory");
+    current_path.value += `${dir}/`;
+    
+} 
+
+function cancelOperation()
+{
+    console.log("Cancel operation requested...");
+    window.parent.postMessage('cancel-op', '*'); // Notify parent to close iframe
+ 
+
+}
+function openOperation()
+{
+    console.log("Opening operation requested...");
+    //console.log(`Length: ${length}`);
+    //localStorage.setItem('length',length);
+    console.log("Sending file's");
+    console.log(map);
+    window.parent.postMessage(map,'*'); // Notify parent to close iframe
+
+    //window.parent.postMessage('close-fo','*'); // Notify parent to close iframe
+
+    /* 
+    localStorage.setItem("lastname", "Smith");
+localStorage.getItem("lastname");
+    */
+
+}
+
+
+function isDoubleClick(element) {
+  const currentTime = Date.now(); // Get the current time in milliseconds
+  const doubleClickThreshold = 300; // Maximum time (ms) between clicks to consider as double-click
+
+  // Check if the same element was clicked and within the threshold time
+  const isDoubleClick = 
+    lastClickedElement === element && 
+    currentTime - lastClickTime <= doubleClickThreshold;
+
+  // Update the last clicked element and time
+  lastClickedElement = element;
+  lastClickTime = currentTime;
+
+  return isDoubleClick;
+}
+
+
+for(let i = 0; i < items.length; i++)
+    {
+        
+      
+        items[i].addEventListener('click', event =>
+        {
+            const isChecked = items[i].childNodes[1].checked;
+            items[i].childNodes[1].checked = isChecked?false:true; 
+            const item = items[i].childNodes[5].textContent;
+            const type = items[i].childNodes[5].getAttribute('data-type');
+            console.log(`Is Checked: ${isChecked}`);
+
+            if(type === 'dir' &&
+               isDoubleClick(items[i]))
+            {
+                gotoDir(item);
+                return;
+            }
+            
+            
+            switch(isChecked)
+            {
+                case true:
+                    map.delete(i);
+                    //console.log(`Map length: ${map.size}`);
+                    //localStorage.removeItem(i);
+                    if(length > 0)
+                    {
+                        length--;
+                        console.log(length);
+                    }
+                    break;
+                case false:
+                    let unit = new Object();
+                    unit.type = type;
+                    unit.name = item;
+                    unit.index = i; 
+                    //unit.group =
+                    map.set(i,unit);
+                    //console.log(`Map length: ${map.size}`);
+                    //localStorage.setItem(i,item);
+                    length++; 
+                    console.log(length);
+                    break;
+            }
+            console.log(`${item} is ${!isChecked ? 'selected' : 'deselected'}`);
+
+             //console.log(items[i]);
+             
+    
+          // const isChecked = event.target.checked;;
+          //const fileName = event.target.nextElementSibling.nextElementSibling.textContent;
+          //console.log(`${item} is ${isChecked ? 'selected' : 'deselected'}`);
+        });
+       
+        console.log(`Type: ${items[i].childNodes[5].getAttribute('data-type')}`);
+    } 
+
+
+  
+
+cancelBtn.addEventListener('click',cancelOperation);
+openBtn.addEventListener('click',openOperation);

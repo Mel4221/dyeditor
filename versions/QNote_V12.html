@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="src/assets/js/color-modes.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mel4221">
+    <meta name="generator" content="QNote">
+    <title>QNote</title>
+    <link href="src/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="src/css/navbars.css" rel="stylesheet">
+    <link href="src/css/sidebars.css" rel="stylesheet">
+    <link href="src/css/editor.css" rel="stylesheet">
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        background-color: #1e1e1e; /* Darker background for the overall page */
+        color: #c7c7c7; /* Light text color for better contrast */
+      }
+
+      main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+      }
+
+      #sidebar {
+        background-color: #252526; /* Match sidebar with the dark theme */
+        height: 100%;
+        overflow-y: auto;
+        flex-shrink: 0;
+        width: 250px; /* Ensure a fixed width */
+        border-right: 1px solid #333; /* Subtle border */
+      }
+
+      #editor-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 90%;
+        background: #1e1e1e; /* Match the editor background */
+      }
+
+      textarea.vscode-textbox {
+        flex: 1;
+        width: 100%;
+        resize: none;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        font-family: monospace;
+        font-size: 14px;
+        background-color: #1e1e1e;
+        color: #d4d4d4;
+        caret-color: #ffffff;
+        overflow: auto;
+        height: 90%;
+      }
+
+      .footer {
+        background-color: #252526; /* Footer matches the sidebar */
+        color: #c7c7c7;
+        padding: 5px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        border-top: 1px solid #333; /* Subtle border */
+      }
+
+      .footer ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        gap: 15px;
+      }
+
+      iframe#file_picker {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        z-index: 9999;
+      }
+
+      .navbar {
+        background-color: #252526; /* Match navbar with the theme */
+      }
+
+      .navbar .nav-link, .navbar .dropdown-item {
+        color: #c7c7c7;
+      }
+
+      .navbar .nav-link:hover, .navbar .dropdown-item:hover {
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid">
+        
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">File</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" id="open">Open</a></li>
+                <li><a class="dropdown-item" href="#" id="save">Save</a></li>
+                <li><a class="dropdown-item" href="#" id="save-as">Save As</a></li>
+                <li><a class="dropdown-item" href="#" id="print">Print</a></li>
+                <li><a class="dropdown-item" href="#" id="exit">Exit</a></li>
+              </ul>
+            </li>
+           
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Edit</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Undo</a></li>
+                <li><a class="dropdown-item" href="#">Cut</a></li>
+                <li><a class="dropdown-item" href="#">Copy</a></li>
+                <li><a class="dropdown-item" href="#">Delete</a></li>
+                <li><a class="dropdown-item" href="#">Find</a></li>
+                <li><a class="dropdown-item" href="#">Time / Date</a></li>
+                <li><a class="dropdown-item" href="#">Font</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">View</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Zoom in</a></li>
+                <li><a class="dropdown-item" href="#">Zoom Out</a></li>
+                <li><a class="dropdown-item" href="#">Zoom Reset</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    Status Bar
+                    <input type="checkbox" checked />
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <div id="sidebar">
+        <a href="#" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+          <span class="fs-5 fw-semibold">Explorer</span>
+        </a>
+        <ul class="list-unstyled ps-0">
+          <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#src-collapse" aria-expanded="false">
+              src
+            </button>
+            <div class="collapse" id="src-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">style.css</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="editor-container">
+        <textarea class="vscode-textbox" placeholder="Type your code here..."></textarea>
+        <div class="footer">
+          <ul class="list-inline">
+            <li>Ln 0</li>
+            <li>Col 0</li>
+            <li>Buffer Size 0B</li>
+            <li>100%</li>
+            <li>Windows(CRLF)</li>
+            <li>UTF-8</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+    <script src="src/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.querySelector("#open").addEventListener("click", () => {
+        alert("Open file clicked!");
+      });
+    </script>
+  </body>
+</html>

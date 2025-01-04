@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="src/assets/js/color-modes.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mel4221">
+    <meta name="generator" content="QNote">
+    <title>QNote</title>
+    <link href="src/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="src/css/navbars.css" rel="stylesheet">
+    <link href="src/css/sidebars.css" rel="stylesheet">
+    <link href="src/css/editor.css" rel="stylesheet">
+    <link href="src/css/QNote.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="src/img/favicon.webp">
+    <style>
+      /* Style for the main layout */
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        background-color: #1e1e1e; /* Darker background for the overall page */
+        color: #c7c7c7; /* Light text color for better contrast */
+      }
+
+      main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+      }
+
+      #sidebar {
+        background-color: #252526; /* Match sidebar with the dark theme */
+        height: 100%;
+        overflow-y: auto;
+        flex-shrink: 0;
+        width: 250px;
+        border-right: 1px solid #333; /* Subtle border */
+      }
+
+      #editor-container {
+        flex: 1;
+        display: flex;
+        height: 80%;
+        flex-direction: column;
+        background: #1e1e1e; /* Match the editor background */
+      }
+
+      /* Tabs inside the editor */
+      .tabs-container {
+        display: flex;
+        background-color: #252526; /* Dark background for tabs */
+        padding: 5px;
+        border-bottom: 1px solid #333; /* Subtle border for separation */
+        font-size: 14px;
+        z-index: 2;
+      }
+
+      .tab {
+        padding: 10px;
+        margin-right: 5px;
+        cursor: pointer;
+        color: #c7c7c7;
+        border: 1px solid transparent;
+        border-radius: 4px;
+      }
+
+      .tab:hover {
+        background-color: #333;
+      }
+
+      .tab.active {
+        background-color: #3c3f41;
+        color: white;
+        border-color: #555;
+      }
+
+      /* Textarea styles for editor */
+      .editor {
+        flex: 1;
+        width: 100%;
+        resize: none;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        font-family: monospace;
+        font-size: 14px;
+        background-color: #1e1e1e;
+        color: #d4d4d4;
+        caret-color: #ffffff;
+        overflow: auto;
+        z-index: 1;
+      }
+
+      .footer {
+        background-color: #252526; /* Footer matches the sidebar */
+        color: #c7c7c7;
+        padding: 5px 10px;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        border-top: 1px solid #333; /* Subtle border */
+        position: absolute;
+        top: 90%;
+        left:65%;
+
+      }
+
+      .footer ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        gap: 15px;
+      }
+
+      iframe#file_picker {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        z-index: 9999;
+      }
+
+      .navbar {
+        background-color: #252526; /* Match navbar with the theme */
+      }
+
+      .navbar .nav-link, .navbar .dropdown-item {
+        color: #c7c7c7;
+      }
+
+      .navbar .nav-link:hover, .navbar .dropdown-item:hover {
+        color: #ffffff;
+      }
+
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">File</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" id="open">Open</a></li>
+                <li><a class="dropdown-item" href="#" id="save">Save</a></li>
+                <li><a class="dropdown-item" href="#" id="save-as">Save As</a></li>
+                <li><a class="dropdown-item" href="#" id="print">Print</a></li>
+                <li><a class="dropdown-item" href="#" id="exit">Exit</a></li>
+              </ul>
+            </li>
+            <!-- Other nav items -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <div id="sidebar">
+        <a href="#" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+          <span class="fs-5 fw-semibold">Explorer</span>
+        </a>
+        <ul class="list-unstyled ps-0" id="file-tree">
+          <!-- File tree goes here -->
+        </ul>
+      </div>
+
+      <!-- Tabs container inside the editor -->
+      <div id="editor-container">
+        <div class="tabs-container" id="tabs">
+          <div class="tab active" data-tab="1">file.txt</div>
+          <div class="tab active" data-tab="2">file.txt</div>
+          <div class="tab active" data-tab="3">file.txt</div>
+          <div class="tab active" data-tab="4">file.txt</div>
+          <div class="tab active" data-tab="5">file.txt</div>
+
+        </div>
+        <!-- Editor area with textarea -->
+        <textarea class="editor" placeholder="Type your code here..."></textarea>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <ul class="list-inline">
+          <li>Ln 0</li>
+          <li>Col 0</li>
+          <li>Buffer Size 0B</li>
+          <li>100%</li>
+          <li>Windows(CRLF)</li>
+          <li>UTF-8</li>
+        </ul>
+      </div>
+    </main>
+
+    <script src="src/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/js/QNote.js"></script>
+
+    <script>
+      // Tab switching logic
+      const tabs = document.querySelectorAll('.tab');
+      const editorArea = document.querySelector('.editor');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Remove active class from all tabs
+          tabs.forEach(t => t.classList.remove('active'));
+
+          // Add active class to the clicked tab
+          tab.classList.add('active');
+
+          // Update editor content based on the active tab
+          const tabId = tab.getAttribute('data-tab');
+          // Update the editor or load content dynamically if necessary
+        });
+      });
+    </script>
+  </body>
+</html>

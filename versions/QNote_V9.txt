@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+    <head>
+      <script src="src/assets/js/color-modes.js"></script>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="Mel4221">
+      <meta name="generator" content="QNote">
+      <title>QNote</title>
+      <link href="src/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link href="src/css/navbars.css" rel="stylesheet">
+      <link href="src/css/sidebars.css" rel="stylesheet">
+      <link href="src/css/editor.css" rel="stylesheet">
+    </head>
+    <style>
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        z-index: 9999;
+      }
+    </style>
+    <body>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid"> 
+          <div class="collapse navbar-collapse" id="navbarsExample04">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <!-- Navbar items here -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <main>
+        <!-- Sidebar -->
+        <div class="flex-shrink-0 p-3" style="width: 280px;" id="sidebar">
+          <!-- Sidebar content here -->
+        </div>
+        
+        <!-- Textbox editor Section -->
+        <div class="container mt-4" id="editor-container">
+          <div class="row">
+            <div class="col">
+              <textarea class="vscode-textbox" placeholder="Type your code here..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- File Picker Iframe -->
+        <div class="file-picker" id="file-picker-container" style="display: none;">
+          <iframe id="file-picker-iframe" src="FP_V2.html"></iframe>
+        </div>
+
+        <!-- Button to open File Picker -->
+        <button id="open-file-picker" class="btn btn-primary">Open File Picker</button>
+      </main>
+
+      <script src="src/assets/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="src/js/sidebars.js"></script>
+
+      <script>
+        const filePickerIframe = document.getElementById('file-picker-iframe');
+        const filePickerContainer = document.getElementById('file-picker-container');
+        const openFilePickerButton = document.getElementById('open-file-picker');
+
+        // Function to show the iframe (File Picker)
+        openFilePickerButton.addEventListener('click', function() {
+          filePickerContainer.style.display = 'block'; // Show the iframe
+        });
+
+        // Function to hide the iframe (when user clicks 'Open' or 'Cancel')
+        function closeFilePicker() {
+          filePickerContainer.style.display = 'none'; // Hide the iframe
+        }
+
+        // Listen for messages from the iframe (like 'Open' or 'Cancel')
+        window.addEventListener('message', function(event) {
+          if (event.data === 'closeFilePicker') {
+            closeFilePicker(); // Close the iframe
+          }
+        });
+      </script>
+    </body>
+</html>

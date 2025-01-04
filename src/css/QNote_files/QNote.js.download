@@ -1,0 +1,45 @@
+ /*
+    This is the ToolsStrip top where you have pretty mutch the maing options
+    @Strip
+    @index0
+ */
+const openBtn = document.getElementById('open');
+const saveBtn = document.getElementById('save');
+const saveAsBtn = document.getElementById('save-as');
+const printBtn = document.getElementById('print');
+const exitBtn = document.getElementById('exit');
+const file_picker = document.getElementById('file_picker');
+
+
+
+
+// Function to show the iframe (File Picker)
+openBtn.addEventListener('click', function() {
+    console.log("File picker requested");
+    file_picker.style.display = 'block'; // Show the iframe
+
+});
+ 
+window.addEventListener('message', function(event) {
+    if (event.data != null && 
+        event.data != 'cancel-op'
+    ) 
+        //if (event.data === 'close-fo') 
+    {      
+        const map = event.data;
+     
+        file_picker.style.display = 'none';  
+
+    }if(event.data === 'cancel-op'){
+        file_picker.style.display = 'none';  
+
+    }
+});
+/*
+// Listen for messages from the iframe (like 'Open' or 'Cancel')
+window.addEventListener('message', function(event) {
+    if (event.data === 'closeFilePicker') {
+    closeFilePicker(); // Close the iframe
+    }
+});
+*/

@@ -1,0 +1,148 @@
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  background-color: #1e1e1e; /* Darker background for the overall page */
+  color: #c7c7c7; /* Light text color for better contrast */
+}
+
+main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+#sidebar {
+  background-color: #252526; /* Match sidebar with the dark theme */
+  height: 100%;
+  overflow-y: auto;
+  flex-shrink: 0;
+  width: 250px; /* Ensure a fixed width */
+  border-right: 1px solid #333; /* Subtle border */
+}
+
+#editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  background: #1e1e1e; /* Match the editor background */
+}
+
+textarea.vscode-textbox {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  caret-color: #ffffff;
+  overflow: auto;
+  height: 90%;
+}
+
+.footer {
+  background-color: #252526; /* Footer matches the sidebar */
+  color: #c7c7c7;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  border-top: 1px solid #333; /* Subtle border */
+}
+
+.footer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+iframe#file_picker {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 9999;
+}
+
+.navbar {
+  background-color: #252526; /* Match navbar with the theme */
+}
+
+.navbar .nav-link, .navbar .dropdown-item {
+  color: #c7c7c7;
+}
+
+.navbar .nav-link:hover, .navbar .dropdown-item:hover {
+  color: #ffffff;
+}
+
+#file-tree li ul.small {
+  font-size: initial;
+}
+
+#file-tree ul ul {
+  margin-left: 10px; /* Adjust this value as needed */
+}
+
+.tab {
+  padding: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  color: #c7c7c7;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.tabs-container {
+  display: flex;
+  padding: 0%;
+  white-space: nowrap; /* Prevents wrapping of child elements */
+  overflow-x: auto;    /* Enables horizontal scrolling */
+  overflow-y: hidden;  /* Hides vertical overflow */
+  scrollbar-width: thin; /* For a thinner scrollbar (for browsers that support it) */
+  -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
+}
+
+.tabs-container:hover {
+  background-color: #4d4d4d52;
+}
+
+.tabs-container::-webkit-scrollbar {
+  height: 6px; /* Custom scrollbar height */
+}
+
+.tabs-container::-webkit-scrollbar-thumb {
+  background-color: #aaa; /* Color of the scrollbar thumb */
+  border-radius: 4px;     /* Rounds scrollbar edges */
+}
+
+.tabs-container::-webkit-scrollbar-track {
+  background-color: #f4f4f4; /* Color of the scrollbar track */
+}
+
+.close-tab {
+  width: auto;
+  height: auto;
+  margin-left: 10px;
+  margin-right: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.close-tab:hover {
+  background-color: #333334; /* Dark background for tabs */
+  border: none 1px;
+  border-radius: 2px;
+}

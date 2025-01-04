@@ -1,0 +1,27 @@
+<div id="sidebar">
+  <!-- Sidebar content here -->
+</div>
+
+<div id="resizer" style="width: 5px; cursor: ew-resize; position: absolute; top: 0; right: 0; bottom: 0;"></div>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const resizer = document.getElementById('resizer');
+  let isResizing = false;
+
+  resizer.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', () => {
+      isResizing = false;
+      document.removeEventListener('mousemove', handleMouseMove);
+    });
+  });
+
+  function handleMouseMove(e) {
+    if (isResizing) {
+      const newWidth = e.clientX;  // Update this to adjust the sidebar width based on mouse position
+      sidebar.style.width = `${newWidth}px`;
+    }
+  }
+</script>
