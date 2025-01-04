@@ -21,7 +21,20 @@ var open_file = new Map();
 var fileTree;
 var lastCheck = performance.now();
 var threshold = 100; // Time in ms considered as a "stuck" threshold
+
+
+  
+
+
+const editor = CodeMirror.fromTextArea(document.getElementById('editor-box'), {
  
+    lineNumbers: true,       // Show line numbers
+    mode: "javascript",      // Language mode (e.g., JavaScript)
+    theme: "dracula",        // Syntax highlighting theme
+    
+});
+//editor.setSize(1024,500); // Set the editor size to 700px by 500px
+
 
 
 function openExplorer(obj)
@@ -45,26 +58,27 @@ saveBtn.addEventListener('click',saveFileContent);
 
  
 window.addEventListener('message', function(event) {
-    const data = event.data;
-    if (data !== null && 
-        data !== 'cancel-op'
-    ) 
-    {      
-       
-        console.log("Message",{data});
-        if(data.items !== undefined)
-        {
-            fileTree = data;
+    try{
+        const data = event.data;
+      
+        if (data.type === 'selection') 
+        {      
+        
+            console.log("Received message",{data}); 
+            fileTree = data.message;
             createFileTree(fileTree,file_tree); // Load the top-level items
             localStorage.setItem('current_tree', JSON.stringify(fileTree));
             file_picker.style.display = 'none';
+ 
+ 
+        }if(data.type === 'cancel-op'){
+            file_picker.style.display = 'none';
+
         }
-     
-         
-
-    }if(data === 'cancel-op'){
-        file_picker.style.display = 'none';
-
+    }catch(error)
+    {
+        console.log("There was an error please try again",error);
+        alert(error);
     }
 });
 
@@ -155,22 +169,13 @@ const tabOff = (tag) => {
     tag.classList.remove('btn-secondary','active');
     tag.classList.add('btn-ligth','active');
 };
-const fileOff = (tag) => 
-{
-    console.log({Tag:tag});
-    if(tag)
-    {
-        tag.classList.remove('btn-ligth','active');
-    }
-    
+
+const fileOff = (tag) => {
+    if(tag){tag.classList.remove('btn-ligth','active');}
 }
-const fileOn = (tag) =>
-{
-    console.log({Tag:tag});
-    if(tag)
-    {
-        tag.classList.add('btn-ligth','active');
-    }
+
+const fileOn = (tag) =>{
+    if(tag)tag.classList.add('btn-ligth','active');
 }
 
  
@@ -190,10 +195,10 @@ function switchLoading()
  //@todo add that when the last one 
  //of the files is close or the current file si closed
  //that it click on the first file in the map of files
-var target;
+//var target;
 async function closeTab(event)
 {
-    target = event.target; 
+  //  target = event.target; 
     event.stopPropagation(); // Prevent the event from bubbling up to the parent div
 
     const tab_id = event.target.parentElement.getAttribute('data-id');
@@ -208,8 +213,8 @@ async function closeTab(event)
     if(tab_id === content_id)
     {
         console.log("Closing current tab");
-        editor_box.value = ''; 
-        
+        //editor_box.value = ''; 
+        editor.setValue('');
         console.log("Tabs length",tabs_length);
         /*
             if tab is more than one since if is 1
@@ -227,7 +232,7 @@ async function closeTab(event)
         because this is the last one right?????
         lets clear the input box right ???? 
     */
-    if(tabs_length === 1) editor_box.value = ''; 
+    if(tabs_length === 1) editor.setValue('');//editor_box.value = ''; 
 
     //console.log("File closed",[fileInfo.name,fileInfo.id]);
 
@@ -370,7 +375,8 @@ async function swapFile(id)
 
     // Update the editor UI
     document.title = temp.name; 
-    editor_box.value = temp.content;
+    //editor_box.value = temp.content;
+    editor.setValue(temp.content);
     editor_box.setAttribute('data-id', temp.id); // Ensure the editor reflects the correct file ID
     editor_box.setAttribute('data-path', temp.path);
 
@@ -419,7 +425,8 @@ async function swapFile(id)
                 id: id,
             };
 
-            editor_box.value = newFileInfo.content;
+           // editor_box.value = newFileInfo.content;
+           editor.setValue(newFileInfo.content);
             document.title = newFileInfo.name; 
             editor_box.setAttribute('data-path', newFileInfo.path);
             editor_box.setAttribute('data-id', newFileInfo.id);
@@ -457,13 +464,13 @@ async function swapFile(id)
         'Content-Type': 'application/json',
         'path': path
         },
-        body: editor_box.value // The actual data we're sending
+        body: editor.getValue() // The actual data we're sending
     })
         .then(response => response.json())  // Assuming the server responds with JSON
         .then(data => {
             console.log('Response:', data); // Handle the response
             const file = open_file.get(content_id);
-            file.content = editor_box.value;
+            file.content = editor.getValue(); //editor_box.value;
             open_file.set(content_id,file);
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach((tab)=>{
@@ -489,6 +496,7 @@ async function swapFile(id)
   function disableDefaultShortcuts() {
     document.addEventListener('keydown', async (event) => {
       // Disable Ctrl+S (Save)
+      
       if (event.ctrlKey && event.key === 's') {
         event.preventDefault();
         await saveFileContent();
@@ -544,60 +552,9 @@ function loadLastTree()
     }catch(error){
         console.log({Message:"Load last tree error maybe because it was too big",Error:error});
     }
-
 }
-/*
-function collapseToTarget(dataSrc, dataId) {
-    // Select the target element based on data-src or data-id
-    const targetElement = document.querySelector(`[data-src="${dataSrc}"], [data-id="${dataId}"]`);
-    if (!targetElement) {
-        console.error('Element with specified data-src or data-id not found.');
-        return;
-    }
 
-    // Traverse up the DOM and collapse all parents with collapsible functionality
-    let parent = targetElement.parentElement;
-    while (parent) {
-        const collapseButton = parent.querySelector('[data-bs-toggle="collapse"]');
-        if (collapseButton) {
-            const collapseTarget = document.querySelector(collapseButton.getAttribute('data-bs-target'));
-            if (collapseTarget && collapseTarget.classList.contains('collapse')) {
-                collapseTarget.classList.add('show'); // Ensure it's expanded
-            }
-        }
-        parent = parent.parentElement;
-    }
-}
-*/
-/*
-function collapseToTarget(dataSrc, dataId) {
-    // Select the target element based on data-src or data-id
-    const targetElement = document.querySelector(`[data-src="${dataSrc}"], [data-id="${dataId}"]`);
-    if (!targetElement) {
-        console.error('Element with specified data-src or data-id not found.');
-        return;
-    }
 
-    // Traverse up the DOM and expand all collapsible parents
-    let parent = targetElement.parentElement;
-    while (parent) {
-        const collapseButton = parent.querySelector('[data-bs-toggle="collapse"]');
-        if (collapseButton) {
-            const collapseTarget = document.querySelector(collapseButton.getAttribute('data-bs-target'));
-            if (collapseTarget && collapseTarget.classList.contains('collapse')) {
-                collapseTarget.classList.add('show'); // Expand the collapsible element
-            }
-        }
-        parent = parent.parentElement;
-    }
-
-    // Scroll the target element into view
-    targetElement.scrollIntoView({
-        behavior: 'smooth', // Adds a smooth scrolling effect
-        block: 'center'     // Aligns the element to the center of the viewport
-    });
-}
-*/
 function collapseToTarget(dataSrc, dataId) {
     // Select the target element based on data-src or data-id
     const targetElement = document.querySelector(`[data-src="${dataSrc}"], [data-id="${dataId}"]`);
@@ -652,26 +609,29 @@ function handleUILag(delay) {
     // Example: Alert the user or reduce input processing
 }
 
-editor_box.addEventListener('input',async()=>
+document.addEventListener('input',async(event)=>
 {
-    const content_id = editor_box.getAttribute('data-id'); 
-    const tabs = document.querySelectorAll('.tab');
-    //console.log(tabs.length);
 
-    tabs.forEach((tab)=>{
-        const tab_id = tab.getAttribute('data-id'); 
-        const iTag = tab.querySelector('i');
-        console.log({tab_id:tab_id,content_id:content_id});
-        if(tab_id===content_id)
-            {
-                console.log("Swapping closing state");
-                iTag.classList.remove('fa-times');
-                iTag.classList.add('fa-circle');
-                tab.setAttribute('data-changed',true);
-            }
+    if(event.target.nodeName === 'TEXTAREA')
+    {
+        const content_id = editor_box.getAttribute('data-id'); 
+        const tabs = document.querySelectorAll('.tab');
+        //console.log(event.target.nodeName);
 
-    });
-   
+        tabs.forEach((tab)=>{
+            const tab_id = tab.getAttribute('data-id'); 
+            const iTag = tab.querySelector('i');
+            console.log({tab_id:tab_id,content_id:content_id});
+            if(tab_id===content_id)
+                {
+                    console.log("Swapping closing state");
+                    iTag.classList.remove('fa-times');
+                    iTag.classList.add('fa-circle');
+                    tab.setAttribute('data-changed',true);
+                }
+
+        });
+    }
 
 });
 

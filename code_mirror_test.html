@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script-->
+
+
+    <link rel="stylesheet" href="src/mirror/css/codemirror.min.css">
+    <script src="src/mirror/js/codemirror.min.js"></script>
+    <script src="src/mirror/js/javascript.min.js"></script>
+
+
+
+</head>
+<body>
+<style>
+    body{
+        background-color: rgba(0, 0, 0, 0.424);
+
+    }
+</style>
+    <textarea style="background-color:black;"id="editor"></textarea>
+    <script>
+        const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+            lineNumbers: true,       // Show line numbers
+            mode: "javascript",      // Language mode (e.g., JavaScript)
+            theme: "default",        // Syntax highlighting theme
+            
+        });
+    </script>
+    
+
+</body>
+</html>

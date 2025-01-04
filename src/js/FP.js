@@ -388,7 +388,7 @@ function gotoDir(dir)
 function cancelOperation()
 {
     console.log("Cancel operation requested...");
-    window.parent.postMessage('cancel-op', '*'); // Notify parent to close iframe
+    window.parent.postMessage({type:'cancel-op'}, '*'); // Notify parent to close iframe
 }
 
 function isMultiple()
@@ -408,9 +408,92 @@ function isMultiple()
 
 
  
+async function openOperation() {
+    console.log("Opening operation requested...");
+    const items = document.querySelectorAll('.file-item');
+    // This also clears the file list
+    switchLoading();
+
+    const selected = {
+        "root-path": current_path.value,
+        "items": [] // Initialize the "items" array
+    };
+    selected["root-path"] = current_path.value;
+
+    // Using for...of to handle asynchronous operations in sequence
+    for (const item of items) {
+        const input = item.querySelector('input');
+
+        if (input.checked) {
+            const name = input.getAttribute('data-name');
+            const type = input.getAttribute('data-type');
+            const path = input.getAttribute('data-path');
+            const id = input.getAttribute('data-id');
+
+            switch (type) {
+                case 'dir':
+                    const tree = await getTree(`${path}/`, 0);
+
+                    const dirObj = {
+                        name: name,
+                        type: type,
+                        path: path,
+                        id: id,
+                        sub: tree.items[0]?.sub
+                    };
+                    //console.info({ tree });
+
+                    //if(tree.items[0].sub)tree.items[0].sub.shift();
+                    
+                    //console.info({ sub: tree.items[0]?.sub });
+                    
+                    selected.items.push(dirObj);
+                    break;
+
+                case 'file':
+                    const fileObj = {
+                        name: name,
+                        type: type,
+                        path: path,
+                        id: id
+                    };
+                    selected.items.push(fileObj);
+                    break;
+            }
+        }
+    }
+
+    console.log("Selected items", selected);
+
+    // If no items are selected, fetch the default tree
+    if (selected.items.length === 0) {
+        const tree = await getTree(current_path.value, 0);
+        console.log({ 'Tree': tree, 'From': current_path.value });
+
+        const dirObj = {
+            name: tree.items[0]?.name,
+            type: tree.items[0]?.type,
+            path: tree.items[0]?.path,
+            id: tree.items[0]?.id,
+            sub: tree.items[0]?.sub
+        };
+        selected.items.push(dirObj);
+    }
+
+    console.log("Selected", selected);
+
+    // Send the result back with a delay
+    setTimeout(() => {
+        window.parent.postMessage({ type: 'selection', message: selected }, '*');
+        switchLoading();
+    }, 1000);
+
+    return selected;
+}
 
 
-function openOperation() 
+/*
+async function openOperation() 
 {
    
     console.log("Opening operation requested...");
@@ -424,7 +507,7 @@ function openOperation()
     };
     selected["root-path"] = current_path.value;
   
-    items.forEach((item)=>
+   await items.forEach(async (item)=>
     {
         const input = item.querySelector('input');
        
@@ -439,18 +522,8 @@ function openOperation()
             const id   = input.getAttribute('data-id');
             switch(type)
             {
-                case 'file':
-                    const fileObj = {
-                        name: name,
-                        type: type,
-                        path: path,
-                        id: id
-                    };
-                    selected.items.push(fileObj);
-                    break;
                 case 'dir':
-                    const tree = getTree(path,0);
-                    //console.log(tree);
+                    const tree = await getTree(path,0);
     
                     const dirObj = {
                         name: name,
@@ -459,7 +532,18 @@ function openOperation()
                         id: id,
                         sub: tree
                     };
+                    console.info({tree});
+                    console.info({sub:tree.items[0].sub});
                     selected.items.push(dirObj);
+                    break;
+                case 'file':
+                    const fileObj = {
+                        name: name,
+                        type: type,
+                        path: path,
+                        id: id
+                    };
+                    selected.items.push(fileObj);
                     break;
             }
 
@@ -470,7 +554,7 @@ function openOperation()
     
     if(selected.items.length === 0)
     {
-        const tree = getTree(current_path.value,0);
+        const tree = await getTree(current_path.value,0);
         console.log({'Tree':tree,'From':current_path.value});
        
         const dirObj = {
@@ -482,13 +566,20 @@ function openOperation()
         };
         selected.items.push(dirObj);
     }
-    console.log("Selected",selected);
-    switchLoading();
-    window.parent.postMessage(selected,'*');
 
+    console.log("Selected",selected);
+    
+    setTimeout(()=>{
+        window.parent.postMessage({type:'selection',message:selected},'*');
+        switchLoading();
+    },1000);
+    return selected;
    
     
 }
+
+*/
+
 
 
 function isDoubleClick(element) {
