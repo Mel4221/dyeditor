@@ -18,6 +18,7 @@ const tabs_container = document.getElementById('tabs');
 const url = 'http://localhost:5241/';
 var debug_tabs = false; 
 var open_file = new Map();
+
 var fileTree;
 var lastCheck = performance.now();
 var threshold = 100; // Time in ms considered as a "stuck" threshold
@@ -382,6 +383,41 @@ async function swapFile(id)
 
 }
 
+function getBufferSize(text) {
+    let fileSize = null;
+    const length = text.length; // Length of the text
+
+    if ((length / 1024 / 1024 / 1024) >= 1) {
+        fileSize = `${(length / 1024 / 1024 / 1024).toFixed(2)}GB`;
+        return fileSize;
+    }
+
+    if ((length / 1024 / 1024) >= 1) {
+        fileSize = `${(length / 1024 / 1024).toFixed(2)}MB`;
+        return fileSize;
+    }
+    
+    if ((length / 1024) >= 1) {
+        fileSize = `${(length / 1024).toFixed(2)}KB`;
+        return fileSize;
+    }
+
+    fileSize = `${length}B`;
+    return fileSize;
+}
+
+
+  function hashText(text)
+  {
+    let hash = 0;
+    let e = new TextEncoder();
+    let buffer = e.encode(text);
+    for(let ch = 0; ch < buffer.length; ch++)
+    {
+        hash += (buffer[ch] * 2); 
+    }
+    return hash;
+  }
   async function fetchFileInfo(file,id)
   {  
     
@@ -419,6 +455,8 @@ async function swapFile(id)
               const newFileInfo = {
                 name: json.fileName,
                 content: json.content,
+                hash: hashText(json.content),
+                change:[],
                 length: json.length,
                 size: json.size,
                 path: file,
@@ -614,14 +652,14 @@ document.addEventListener('input',async(event)=>
 
     if(event.target.nodeName === 'TEXTAREA')
     {
-        const content_id = editor_box.getAttribute('data-id'); 
+        const content_id = editor_box.getAttribute('data-id');
         const tabs = document.querySelectorAll('.tab');
         //console.log(event.target.nodeName);
 
         tabs.forEach((tab)=>{
             const tab_id = tab.getAttribute('data-id'); 
             const iTag = tab.querySelector('i');
-            console.log({tab_id:tab_id,content_id:content_id});
+            //console.log({tab_id:tab_id,content_id:content_id});
             if(tab_id===content_id)
                 {
                     console.log("Swapping closing state");

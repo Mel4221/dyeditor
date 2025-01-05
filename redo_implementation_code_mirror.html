@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeMirror Replace at Last Change</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
+</head>
+<body>
+  <textarea id="code" name="code"></textarea>
+  <button onclick="replaceAtLastChange()">Replace at Last Change</button>
+
+  <script>
+    // Initialize CodeMirror
+    const editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+      lineNumbers: true,
+      mode: 'javascript',
+    });
+
+    // Variable to store the position of the last change
+    let lastChangePosition = null;
+
+    // Track the position of the last change
+    editor.on('changes', (instance, changes) => {
+      // `changes` is an array of change objects
+      // We'll use the first change in the array to get the last position
+      const lastChange = changes[changes.length - 1];
+      if (lastChange) {
+        const from = lastChange.from; // Start position of the change
+        lastChangePosition = { line: from.line, ch: from.ch }; // Save the position
+      }
+    });
+
+    // Replace text at the position of the last change
+    function replaceAtLastChange() {
+      if (lastChangePosition) {
+        const replacementText = "/* Replaced text */";
+        editor.replaceRange(replacementText, lastChangePosition, lastChangePosition);
+      } else {
+        alert("No changes detected yet!");
+      }
+    }
+  </script>
+</body>
+</html>
