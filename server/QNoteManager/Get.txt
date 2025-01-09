@@ -1,0 +1,38 @@
+﻿/*
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+
+namespace QNoteManager.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class QNoteController : ControllerBase
+    {
+        [HttpGet("path")]
+        public IActionResult GetDirContent([FromQuery] string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return BadRequest("The path cannot be null or empty.");
+
+            if (!Directory.Exists(path))
+                return NotFound("The specified path does not exist.");
+
+            try
+            {
+                // Fetch files and directories
+                var files = Directory.GetFiles(path).Select(Path.GetFileName).ToList();
+                var directories = Directory.GetDirectories(path).Select(Path.GetFileName).ToList();
+
+                // Return result
+                var result = new { files, directories };
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+    }
+}
+
+*/
