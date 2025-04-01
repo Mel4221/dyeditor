@@ -14,21 +14,50 @@ import  Nav  from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Label from 'react-bootstrap/FormLabel';
- 
+import ToolsStrip from './ToolsStrip/ToolsStrip';
+import LeftResizer from './LeftResizer/LeftResizer';
+import EditorBox from './EditorBox/EditorBox';
+import FileExplorer from './FileExplorer/FileExplorer';
 function DyEditor() {
     {/*style={{ 
             height: '100vh', 
             background: 'black',
             display: 'flex',
             flexDirection: 'column'
-        }} className="text-white w-100" */
+        }} classNameName="text-white w-100" 
+        h-100 d-flex flex-column 
+        fluid className=""
+        */
     }
     return (
-        <div >
-            <Container fluid className="h-100 d-flex flex-column">
-              
-            </Container>
-        </div>
+        <Container 
+        style={{
+            width:'100vw',
+            height:'100vh'
+        }}
+        className='bg-dark'
+        fluid>
+            <Row>
+                <Col>
+                    <ToolsStrip/>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={2}>
+                    <FileExplorer/>
+                </Col>
+                <Col xs={1} style={{
+                    width:'5px'
+                }}>
+                    <LeftResizer/>
+                </Col>
+                <Col xs={6}>
+                    <EditorBox/>
+                </Col>
+            </Row>
+            
+        </Container>
+       
     );
 }
 
