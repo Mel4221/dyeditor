@@ -1,12 +1,12 @@
 {
-    "appId":"com.clowntools.ready",
+    "appId":"com.dyeditor.app",
     "files":["dist-electron","dist-react"],
     "extraResources":[
     "dist-electron/preload.cjs",
     "src/ui/assets/**",
     "public/**"
     ],
-    "icon": "src/electron/assets/icon.png",
+    "icon": "src/ui/assets/favicon.webp",
     "mac":{
         "target":"dmg"
     },

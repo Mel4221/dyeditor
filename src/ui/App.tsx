@@ -1,11 +1,12 @@
-
+import  Container  from "react-bootstrap/Container"
+import DyEditor from "./dyeditor/dyeditor"
 function App() {
 
   return (
-    <>
-        <h1>clowntools</h1>
-        <p>add your code and tsx code</p>
-    </>
+    <Container>
+      <DyEditor/>
+    </Container>
+
   )
 }
 
