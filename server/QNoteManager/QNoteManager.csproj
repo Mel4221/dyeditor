@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="backup_Treebuilder.txt" />
+    <None Remove="Default_Program.txt" />
+    <None Remove="Get.txt" />
+    <None Remove="Test_api_program.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="backup_Treebuilder.txt" />
+    <Compile Include="Default_Program.txt" />
+    <Compile Include="Get.txt" />
+    <Compile Include="Test_api_program.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="QuickTools">
+      <HintPath>..\..\csharp\QuickTools\bin\Release\QuickTools.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

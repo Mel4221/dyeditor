@@ -1,0 +1,82 @@
+﻿/*
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+using QuickTools.QCore;
+
+public class Item
+{
+    public string Type { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public List<Item> Sub { get; set; } = new List<Item>();
+
+}
+
+public class Tree
+{
+    public string Path { get; set; } = string.Empty;
+    public bool AllowDeubugger { get; set; } = false;
+    public List<Item> Items { get; set; } = new List<Item>();
+
+    private Item Map(string path)
+    {
+
+        // Determine if the current path is a directory or a file
+        
+        var item = new Item
+        {
+            Type = Directory.Exists(path) ? "dir" : "file",
+            Name = System.IO.Path.GetFileName(path)
+        };
+
+        // If it's a directory, recursively map its contents
+        if (item.Type == "dir")
+        {
+            string[] subDirs = Directory.GetDirectories(path);
+            string[] subFiles = Directory.GetFiles(path);
+            if (this.AllowDeubugger) Get.Blue(path);
+            foreach (var dir in subDirs)
+            {
+                item.Sub.Add(Map(dir)); // Recursive call for directories
+            }
+
+            foreach (var file in subFiles)
+            {
+                if (this.AllowDeubugger) Get.Yellow(file);
+                item.Sub.Add(Map(file)); // Add files in the current directory
+            }
+        }
+
+        return item;
+    }
+
+    // Method to serialize the tree to JSON using Newtonsoft.Json
+    public string ToJson()
+    {
+        return JsonConvert.SerializeObject(new { items = this.Items }, Formatting.None);
+    }
+    public void Build()
+    {
+        if (string.IsNullOrEmpty(this.Path))
+        {
+            throw new ArgumentNullException("The path is empty");
+        }
+
+        // Map the entire tree starting from the root path
+        var rootItem = Map(this.Path);
+        this.Items.Add(rootItem);
+    }
+
+    public void Build(string path)
+    {
+        this.Path = path;
+        this.Build();
+    }
+
+    public Tree() { }
+    public Tree(string path) { this.Path = path; }
+}
+
+
+*/

@@ -1,0 +1,92 @@
+/*
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+
+namespace QNoteManager
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Create a configurable server using a fluent API
+            var server = new Server()
+                .WithUrl("http://0.0.0.0", 4233)
+                .WithKestrelOptions(options =>
+                {
+                    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(30);
+                    options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(30);
+                })
+                .WithCors(policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+
+            server.Build().Run();
+        }
+    }
+
+    public class Server
+    {
+        private readonly WebApplicationBuilder _builder;
+        private string _url = "http://localhost";
+        private int _port = 5000;
+
+        public Server()
+        {
+            _builder = WebApplication.CreateBuilder();
+        }
+
+        public Server WithUrl(string url, int port)
+        {
+            _url = url;
+            _port = port;
+            return this;
+        }
+
+        public Server WithKestrelOptions(Action<KestrelServerOptions> configureOptions)
+        {
+            _builder.WebHost.ConfigureKestrel(configureOptions);
+            return this;
+        }
+
+        public Server WithCors(Action<CorsPolicyBuilder> configurePolicy)
+        {
+            _builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CustomCorsPolicy", configurePolicy);
+            });
+            return this;
+        }
+
+        public WebApplication Build()
+        {
+            // Add services to the container
+            _builder.Services.AddControllers();
+
+            var app = _builder.Build();
+
+            // Use the configured CORS policy
+            app.UseCors("CustomCorsPolicy");
+
+            // Configure the HTTP request pipeline
+            app.UseAuthorization();
+
+            // Add default route to redirect to QNoteController
+            app.MapGet("/", context =>
+            {
+                context.Response.Redirect("QNote");
+                return Task.CompletedTask;
+            });
+
+            app.MapControllers();
+
+            // Add the configured URL and port
+            app.Urls.Add($"{_url}:{_port}");
+
+            return app;
+        }
+    }
+}
+*/

@@ -1,12 +1,14 @@
 import React from 'react';
 import FooterBar from './FooterBar';
 import FileTabs from'./FileTabs';
+import Container from 'react-bootstrap/Container'
 
 export default function EditorBox()
 {
     return (
     <>
-        <div id="editor-container">
+        <Container id="editor-container"
+        style={{width:'79vw'}}>
             <FileTabs/>
             <div style={{display:'none'}} id="icon-container-box">
 
@@ -23,7 +25,7 @@ export default function EditorBox()
       
             <textarea id="editor-box" className="vscode-textbox" placeholder="Open a file or type something..."></textarea>
             <FooterBar/>
-      </div>   
+      </Container>   
     
     </>
     )

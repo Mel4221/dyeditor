@@ -1,4 +1,54 @@
- 
+.tabs-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+
+/* Hide scrollbar for Chrome/Safari */
+.tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  flex-shrink: 0;
+  user-select: none; /* Prevent text selection during scroll */
+}
+
+/* EditorBox.css */
+.tabs-container {
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--bs-dark);
+}
+
+.tabs-scrollable {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  scrollbar-width: thin; /* For Firefox */
+  
+}
+
+/* For Chrome/Safari */
+.tabs-scrollable::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tabs-scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--bs-secondary);
+  border-radius: 2px;
+}
+
+.tab {
+  flex-shrink: 0; /* Prevent tabs from shrinking */
+}
+
+/*
 .tabs-container {
   height: 100%;
   width: 100%;
@@ -17,3 +67,5 @@
   background-color: rgba(255, 255, 255, 0.1) !important;
   border-radius: 3px;
 }
+
+*/
